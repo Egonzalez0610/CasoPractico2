@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:fragment="head">
+        <title>Cafeotecnia</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+        <style>
+            img {
+                width: 20px;
+                height: 20px;
+                margin-right: 5px;
+                vertical-align: middle;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+
+
+            #content{
+                margin: 225px;
+                padding: 0;
+            }
+
+
+        </style>
+
+
+    </head>
+    <body>
+        <header th:fragment="header" class="header">
+
+            <nav class="navbar navbar-expand-sm ">                
+
+                <div class="container">                    
+                    <a th:href="@{/}" class="navbar-brand ">Cafeotecnia</a>                    
+                    <button class="navbar-toggler" 
+                            data-bs-toggle="collapse"
+                            data-bs-target="#menu">                        
+                        <span class="navbar-toggler-icon"></span>                    
+                    </button>                    
+                    <div id="menu" class="collapse navbar-collapse" >                        
+                        <ul class="navbar-nav ms-auto " sec:authorize="hasRole('ROLE_USER')" >   
+
+
+                            <li class="nav-item dropdown">
+                                <a th:href="@{/desplegar}" class="nav-link dropdown-toggle" id="menuproductos"role="button" data-bs-toggle="dropdown" aria-expanded="false" >Sobre Nosotros</a>
+                                <ul class="dropdown-menu" aria-labelledby="menuproductos">
+                                    <li class="dropdown-item"><a th:href="@{/desplegar/historia}" class="nav-link"> Historia del café</a></li>
+                                    <li class="dropdown-item"><a th:href="@{/desplegar/variantes}" class="nav-link"> Variantes del café</a></li>
+                                    <li class="dropdown-item"><a th:href="@{/desplegar/caracteristicas}" class="nav-link"> Características del café</a></li>
+                                    <li class="dropdown-item"><a th:href="@{/producto/listado}" class="nav-link"> Nuestros productos</a></li>
+                                </ul>
+                            </li> 
+
+
+                            <li class=" nav-item px-2" >                                
+                                <a class="nav-menu-link nav-link"
+                                   th:href="@{/pedido/listado}"
+                                   >Realizar pedido</a>                            
+                            </li>                            
+                            <li class="  nav-item px-2" sec:authorize="hasRole('ROLE_VENDEDOR')">    
+                                <a class="nav-menu-link nav-link"
+                                   th:href="@{/consultar/listado}"
+                                   >Consultar pedidos</a>                            
+                            </li>                            
+                            <li class="  nav-item px-2">                                
+                                <a class="nav-menu-link nav-link"
+                                   th:href="@{/redes/listado}"
+                                   >Redes Sociales</a> 
+
+                            </li>
+                            <li class="  nav-item px-2" sec:authorize="hasRole('ROLE_ADMIN')">                                
+                                <a class="nav-menu-link nav-link"
+                                th:href="@{/usuario/listado}"
+                                >Usuarios</a> 
+
+                            </li>
+                        </ul>                    
+                    </div>
+                    <div class="col-md-3 text-white text-end">
+                        <ul class="navbar-nav">
+                            <a class="nav-link" th:href="@{/(lang=es)}">ES </a>
+                            <a class="nav-link" th:href="@{/(lang=en)}">EN</a>
+                        </ul>
+                    </div>   
+                    <div>
+                        <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                            <li class="nav-item px-2">
+                                <a class="nav-menu-link nav-link" th:href="@{/login}">
+                                    <i class='fas fa-sign-in-alt'></i>
+                                </a>
+                            </li>                            
+                        </ul>
+                        <ul class="navbar-nav" sec:authorize="isAuthenticated()">
+                            <li class="nav-item text-white my-auto">
+                                <i class='fas fa-user'></i> <span sec:authentication='name'>Santi</span>
+                            </li>
+                            <li class="nav-item my-auto">
+                                <form method="post" th:action="@{/logout}">
+                                    <button class="btn btn-dark">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </button>
+                                </form>
+                            </li>                            
+                        </ul>
+                    </div>
+
+
+
+
+                </div>            
+            </nav>            
+            <section id="main-header" 
+                     class="py-3 bg-secondary">                
+
+            </section> 
+
+
+
+        </header>  
+
+        <footer th:fragment="footer" 
+                class="bg-secondary text-white mt-5 p-2">            
+            <div class="container">                
+                <div class="col">                    
+                    <p class="lead text-center">                        
+                        &COPY; Cafeotecnia Derechos Reservados 2023
+                    </p>                
+                </div>            
+            </div>        
+        </footer>
+    </body>
+</html>
